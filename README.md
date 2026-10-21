@@ -3,7 +3,7 @@
 Interactive futures macros & stock filter dashboard inspired by "Building the Language".
 
 ## Features
-- 10 core CME futures macros: NQ, ES, YM, RTY, CL, GC, 6E, 6J, ZN, ZB
+- 11 core CME futures macros: NQ, ES, YM, RTY, **NKD (Nikkei 225)**, CL, GC, 6E, 6J, ZN, ZB
 - Live delayed quotes via Yahoo Finance (free CORS proxies)
 - Stock/ETF filter with regime bias, linked macro, relative strength, sector, and search
 - Hourly candles context, timeline from 1 Jan 2020 to today
