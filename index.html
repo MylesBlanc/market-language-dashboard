@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Market Language Dashboard · Futures Macros & Stock Filter</title>
+  <title>Core Futures · Stock Filter Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -25,9 +25,7 @@
       --radius: 12px;
       --shadow: 0 4px 24px rgba(0,0,0,0.35);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
@@ -35,7 +33,6 @@
       min-height: 100vh;
       line-height: 1.5;
     }
-
     header {
       background: linear-gradient(180deg, #111827 0%, var(--bg) 100%);
       border-bottom: 1px solid var(--border);
@@ -48,337 +45,130 @@
       z-index: 50;
       backdrop-filter: blur(12px);
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
+    .logo { display: flex; align-items: center; gap: 0.75rem; }
     .logo-icon {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-size: 14px;
+      border-radius: 10px; display: grid; place-items: center;
+      font-weight: 700; font-size: 14px;
     }
-
-    .logo h1 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .logo span {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      display: block;
-      margin-top: -2px;
-    }
-
+    .logo h1 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+    .logo span { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: -2px; }
     .header-meta {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      display: flex; align-items: center; gap: 1.5rem;
+      font-size: 0.8rem; color: var(--text-muted);
     }
-
     .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--green);
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
-      box-shadow: 0 0 8px var(--green);
+      width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+      display: inline-block; margin-right: 6px; box-shadow: 0 0 8px var(--green);
       animation: pulse 2s infinite;
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    main {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 1.75rem 2rem 3rem;
-    }
-
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    main { max-width: 1440px; margin: 0 auto; padding: 1.75rem 2rem 3rem; }
     .section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
-
-    .section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .macros-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1rem;
-      margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 1rem; margin-bottom: 2.5rem;
     }
-
-    @media (max-width: 1200px) {
-      .macros-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 900px) {
-      .macros-grid { grid-template-columns: repeat(3, 1fr); }
-    }
+    @media (max-width: 1200px) { .macros-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px) { .macros-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 700px) {
       .macros-grid { grid-template-columns: repeat(2, 1fr); }
       header { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
     }
-
     .macro-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.1rem 1.2rem;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.2rem;
+      transition: all 0.2s ease; cursor: pointer; position: relative; overflow: hidden;
     }
-
     .macro-card:hover {
-      background: var(--bg-card-hover);
-      border-color: #2d3a55;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
+      background: var(--bg-card-hover); border-color: #2d3a55;
+      transform: translateY(-2px); box-shadow: var(--shadow);
     }
-
-    .macro-card.active {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent);
-    }
-
-    .macro-card .name {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.15rem;
-    }
-
+    .macro-card.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .macro-card .name { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
     .macro-card .ticker {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--accent);
-      font-weight: 500;
-      letter-spacing: 0.03em;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+      color: var(--accent); font-weight: 500; letter-spacing: 0.03em;
     }
-
     .macro-card .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 0.9rem;
+      display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.9rem;
     }
-
-    .macro-card .price {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.15rem;
-      font-weight: 500;
-    }
-
+    .macro-card .price { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 500; }
     .macro-card .change {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 500;
-      padding: 0.15rem 0.45rem;
-      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 500;
+      padding: 0.15rem 0.45rem; border-radius: 6px;
     }
-
     .change.up { color: var(--green); background: var(--green-soft); }
     .change.down { color: var(--red); background: var(--red-soft); }
-
     .macro-card .category {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.7rem;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      opacity: 0.7;
+      position: absolute; top: 0.6rem; right: 0.7rem; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); opacity: 0.7;
     }
-
     .filter-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem;
     }
-
-    .filter-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-      align-items: flex-end;
-    }
-
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
+    .filter-row { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-end; }
+    .filter-group { display: flex; flex-direction: column; gap: 0.4rem; }
     .filter-group label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-size: 0.75rem; font-weight: 500; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em;
     }
-
     select, input[type="text"], input[type="number"] {
-      background: #0d1524;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.55rem 0.85rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      font-family: inherit;
-      min-width: 140px;
-      outline: none;
-      transition: border-color 0.15s;
+      background: #0d1524; border: 1px solid var(--border); color: var(--text);
+      padding: 0.55rem 0.85rem; border-radius: 8px; font-size: 0.875rem;
+      font-family: inherit; min-width: 140px; outline: none; transition: border-color 0.15s;
     }
-
-    select:focus, input:focus {
-      border-color: var(--accent);
-    }
-
+    select:focus, input:focus { border-color: var(--accent); }
     .btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.25rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+      background: var(--accent); color: white; border: none;
+      padding: 0.6rem 1.25rem; border-radius: 8px; font-size: 0.875rem;
+      font-weight: 600; cursor: pointer; transition: background 0.15s, transform 0.1s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
     }
-
     .btn:hover { background: #2563eb; }
     .btn:active { transform: scale(0.98); }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-    .btn-ghost:hover {
-      background: var(--bg-card-hover);
-      color: var(--text);
-    }
-
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+    .btn-ghost:hover { background: var(--bg-card-hover); color: var(--text); }
     .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;
     }
-
-    .results-count {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
+    .results-count { font-size: 0.85rem; color: var(--text-muted); }
     table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--border);
+      width: 100%; border-collapse: collapse; background: var(--bg-card);
+      border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border);
     }
-
     th {
-      text-align: left;
-      padding: 0.85rem 1.1rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      background: #0d1524;
-      border-bottom: 1px solid var(--border);
+      text-align: left; padding: 0.85rem 1.1rem; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+      background: #0d1524; border-bottom: 1px solid var(--border);
     }
-
-    td {
-      padding: 0.9rem 1.1rem;
-      font-size: 0.9rem;
-      border-bottom: 1px solid var(--border);
-    }
-
+    td { padding: 0.9rem 1.1rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: var(--bg-card-hover); }
-
-    .ticker-cell {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 500;
-    }
-    .ticker-cell a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    .ticker-cell a:hover {
-      text-decoration: underline;
-    }
-
+    .ticker-cell { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+    .ticker-cell a { color: var(--accent); text-decoration: none; }
+    .ticker-cell a:hover { text-decoration: underline; }
     .pct-up { color: var(--green); }
     .pct-down { color: var(--red); }
-
     .tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 500;
+      display: inline-block; font-size: 0.7rem; padding: 0.2rem 0.5rem;
+      border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 500;
     }
-
     .tag.risk-on { background: var(--green-soft); color: var(--green); }
     .tag.risk-off { background: var(--red-soft); color: var(--red); }
     .tag.neutral { background: rgba(148,163,184,0.15); color: #94a3b8; }
-
-    .notes {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
+    .notes { margin-top: 2rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
     .notes strong { color: var(--text); }
-
     footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      margin-top: 1rem;
+      text-align: center; padding: 2rem; font-size: 0.75rem; color: var(--text-muted);
+      border-top: 1px solid var(--border); margin-top: 1rem;
     }
   </style>
 </head>
@@ -387,8 +177,8 @@
     <div class="logo">
       <div class="logo-icon">ML</div>
       <div>
-        <h1>Building the Language</h1>
-        <span>Futures Macros · Stock Filter Dashboard</span>
+        <h1>Core Futures</h1>
+        <span>Macros · Stock Filter Dashboard</span>
       </div>
     </div>
     <div class="header-meta">
@@ -448,11 +238,11 @@
       <div class="macro-card" data-symbol="CL" data-name="Crude oil">
         <div class="category">Energy</div>
         <div class="name">Crude oil</div>
+        <div class="ticker">CL</div>
         <div class="price-row">
           <span class="price" data-price>--</span>
           <span class="change up" data-change>+0.00%</span>
         </div>
-        <div class="ticker">CL</div>
       </div>
       <div class="macro-card" data-symbol="GC" data-name="Gold">
         <div class="category">Metal</div>
@@ -580,8 +370,7 @@
           <th>Linked Macro</th>
         </tr>
       </thead>
-      <tbody id="resultsBody">
-      </tbody>
+      <tbody id="resultsBody"></tbody>
     </table>
 
     <div class="notes">
@@ -595,38 +384,20 @@
   </main>
 
   <footer>
-    Market Language Dashboard · Built from the macros on your screen · Not financial advice
+    Core Futures Dashboard · Built from the macros on your screen · Not financial advice
   </footer>
 
   <script>
     const YAHOO_MAP = {
-      NQ:  'NQ=F',
-      ES:  'ES=F',
-      YM:  'YM=F',
-      RTY: 'RTY=F',
-      NKD: 'NKD=F',
-      CL:  'CL=F',
-      GC:  'GC=F',
-      '6E': '6E=F',
-      '6J': '6J=F',
-      ZN:  'ZN=F',
-      ZB:  'ZB=F'
+      NQ: 'NQ=F', ES: 'ES=F', YM: 'YM=F', RTY: 'RTY=F', NKD: 'NKD=F',
+      CL: 'CL=F', GC: 'GC=F', '6E': '6E=F', '6J': '6J=F', ZN: 'ZN=F', ZB: 'ZB=F'
     };
-
     let macroData = {
-      NQ:  { price: 0, change: 0 },
-      ES:  { price: 0, change: 0 },
-      YM:  { price: 0, change: 0 },
-      RTY: { price: 0, change: 0 },
-      NKD: { price: 0, change: 0 },
-      CL:  { price: 0, change: 0 },
-      GC:  { price: 0, change: 0 },
-      '6E':{ price: 0, change: 0 },
-      '6J':{ price: 0, change: 0 },
-      ZN:  { price: 0, change: 0 },
-      ZB:  { price: 0, change: 0 }
+      NQ: {price:0,change:0}, ES: {price:0,change:0}, YM: {price:0,change:0},
+      RTY: {price:0,change:0}, NKD: {price:0,change:0}, CL: {price:0,change:0},
+      GC: {price:0,change:0}, '6E': {price:0,change:0}, '6J': {price:0,change:0},
+      ZN: {price:0,change:0}, ZB: {price:0,change:0}
     };
-
     const stockUniverse = [
       { ticker: "AAPL",  name: "Apple",              sector: "Technology",   price: 0, change: 0, rs: 1.4, regime: "risk-on",  macro: "NQ" },
       { ticker: "MSFT",  name: "Microsoft",          sector: "Technology",   price: 0, change: 0, rs: 1.2, regime: "risk-on",  macro: "NQ" },
@@ -653,24 +424,16 @@
       { ticker: "UUP",   name: "Invesco DB USD Index",sector: "ETF",        price: 0, change: 0, rs: 0.7, regime: "fx-driven",macro: "6E" },
       { ticker: "FXY",   name: "Invesco CurrencyShares Yen",sector: "ETF", price: 0, change: 0, rs: 0.9, regime: "fx-driven",macro: "6J" }
     ];
-
     let activeMacro = null;
-
     function yahooUrl(symbol, useAlt = false) {
       const target = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1d&interval=1h&includePrePost=false`;
-      if (useAlt) {
-        return `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
-      }
+      if (useAlt) return `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
       return `https://proxy.cors.dev/${target}`;
     }
-
     async function fetchYahooQuote(yahooSymbol) {
       for (const useAlt of [false, true]) {
         try {
-          const res = await fetch(yahooUrl(yahooSymbol, useAlt), {
-            cache: 'no-store',
-            headers: { 'Accept': 'application/json' }
-          });
+          const res = await fetch(yahooUrl(yahooSymbol, useAlt), { cache: 'no-store', headers: { 'Accept': 'application/json' } });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const json = await res.json();
           const result = json?.chart?.result?.[0];
@@ -686,17 +449,14 @@
       }
       return null;
     }
-
     async function refreshMacros() {
-      const symbols = Object.keys(YAHOO_MAP);
-      await Promise.all(symbols.map(async (key) => {
+      await Promise.all(Object.keys(YAHOO_MAP).map(async (key) => {
         const q = await fetchYahooQuote(YAHOO_MAP[key]);
         if (q) macroData[key] = q;
       }));
       renderMacros();
       updateDataStatus();
     }
-
     async function refreshStocks() {
       await Promise.all(stockUniverse.map(async (s) => {
         const q = await fetchYahooQuote(s.ticker);
@@ -709,7 +469,6 @@
       runFilter();
       updateDataStatus();
     }
-
     function updateDataStatus() {
       const hasData = Object.values(macroData).some(d => d.price > 0);
       const el = document.getElementById('dataStatus');
@@ -718,7 +477,6 @@
         el.style.color = hasData ? 'var(--green)' : 'var(--red)';
       }
     }
-
     function renderMacros() {
       document.querySelectorAll('.macro-card').forEach(card => {
         const sym = card.dataset.symbol;
@@ -735,7 +493,6 @@
         changeEl.className = 'change ' + (ch >= 0 ? 'up' : 'down');
       });
     }
-
     function formatPrice(sym, p) {
       if (['6J'].includes(sym)) return p.toFixed(5);
       if (['CL','6E'].includes(sym)) return p.toFixed(2);
@@ -743,7 +500,6 @@
       if (p > 1000) return p.toLocaleString('en-US', { maximumFractionDigits: 2 });
       return p.toFixed(2);
     }
-
     document.getElementById('macrosGrid').addEventListener('click', e => {
       const card = e.target.closest('.macro-card');
       if (!card) return;
@@ -753,13 +509,11 @@
       document.getElementById('linkedMacro').value = activeMacro;
       runFilter();
     });
-
     function runFilter() {
       const regime = document.getElementById('regime').value;
       const linked = document.getElementById('linkedMacro').value;
       const minRS  = parseFloat(document.getElementById('minRS').value) || -999;
       const sector = document.getElementById('sector').value;
-
       let filtered = stockUniverse.filter(s => {
         if (regime !== 'any' && s.regime !== regime) return false;
         if (linked !== 'all' && s.macro !== linked) return false;
@@ -767,11 +521,9 @@
         if (sector !== 'all' && s.sector !== sector) return false;
         return true;
       });
-
       filtered.sort((a, b) => b.rs - a.rs);
       renderTable(filtered);
     }
-
     function resetFilter() {
       document.getElementById('regime').value = 'any';
       document.getElementById('linkedMacro').value = 'all';
@@ -781,17 +533,13 @@
       activeMacro = null;
       runFilter();
     }
-
     function renderTable(rows) {
       const tbody = document.getElementById('resultsBody');
-      document.getElementById('resultsCount').textContent =
-        `Showing ${rows.length} of ${stockUniverse.length} names`;
-
+      document.getElementById('resultsCount').textContent = `Showing ${rows.length} of ${stockUniverse.length} names`;
       if (rows.length === 0) {
         tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">No stocks match the current filter criteria</td></tr>`;
         return;
       }
-
       tbody.innerHTML = rows.map(s => `
         <tr>
           <td class="ticker-cell"><a href="https://finviz.com/quote.ashx?t=${encodeURIComponent(s.ticker)}&p=d" target="_blank" rel="noopener">${s.ticker}</a></td>
@@ -805,14 +553,11 @@
         </tr>
       `).join('');
     }
-
     function updateClock() {
       const now = new Date();
       const ny = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-      document.getElementById('clock').textContent =
-        ny.toLocaleTimeString('en-US', { hour12: false }) + ' NY';
+      document.getElementById('clock').textContent = ny.toLocaleTimeString('en-US', { hour12: false }) + ' NY';
     }
-
     (function addStatusBadge() {
       const meta = document.querySelector('.header-meta');
       if (meta) {
@@ -823,12 +568,10 @@
         meta.appendChild(span);
       }
     })();
-
     renderMacros();
     runFilter();
     updateClock();
     setInterval(updateClock, 1000);
-
     async function boot() {
       await refreshMacros();
       await refreshStocks();
