@@ -178,7 +178,7 @@
       <div class="logo-icon">ML</div>
       <div>
         <h1>Core Futures</h1>
-        <span>Macros · Stock Filter Dashboard</span>
+        <span>Indices · Stock Filter Dashboard</span>
       </div>
     </div>
     <div class="header-meta">
@@ -188,7 +188,7 @@
   </header>
 
   <main>
-    <div class="section-title">Core Futures Macros</div>
+    <div class="section-title">Core Futures Indices</div>
     <div class="macros-grid" id="macrosGrid">
       <div class="macro-card" data-symbol="NQ" data-name="Nasdaq">
         <div class="category">Equity</div>
@@ -305,9 +305,9 @@
           </select>
         </div>
         <div class="filter-group">
-          <label>Linked Macro</label>
+          <label>Linked Index</label>
           <select id="linkedMacro">
-            <option value="all">All macros</option>
+            <option value="all">All indices</option>
             <option value="NQ">Nasdaq (NQ)</option>
             <option value="ES">S&P 500 (ES)</option>
             <option value="YM">Dow (YM)</option>
@@ -354,7 +354,7 @@
 
     <div class="results-header">
       <div class="results-count" id="resultsCount">Showing sample universe · 24 names</div>
-      <div style="font-size:0.8rem;color:var(--text-muted)">Sorted by relative strength to selected macro</div>
+      <div style="font-size:0.8rem;color:var(--text-muted)">Sorted by relative strength to selected index</div>
     </div>
 
     <table>
@@ -365,9 +365,9 @@
           <th>Sector</th>
           <th>Price</th>
           <th>1D %</th>
-          <th>RS vs Macro</th>
+          <th>RS vs Index</th>
           <th>Regime Tag</th>
-          <th>Linked Macro</th>
+          <th>Linked Index</th>
         </tr>
       </thead>
       <tbody id="resultsBody"></tbody>
@@ -375,16 +375,16 @@
 
     <div class="notes">
       <strong>How to use this dashboard</strong><br>
-      The eleven futures macros (NQ, ES, YM, RTY, NKD, CL, GC, 6E, 6J, ZN, ZB) form the core “language” of the market.
-      Click any macro card to highlight it as the reference for relative-strength ranking.
-      Use the filter panel to surface stocks that historically move with a chosen regime or linked macro.
+      The eleven futures indices (NQ, ES, YM, RTY, NKD, CL, GC, 6E, 6J, ZN, ZB) form the core “language” of the market.
+      Click any index card to highlight it as the reference for relative-strength ranking.
+      Use the filter panel to surface stocks that historically move with a chosen regime or linked index.
       Click any ticker to open its Finviz chart.
-      Live quotes from Yahoo Finance (delayed) via free CORS proxies. No API key required. Refreshes every 60 s. RS = stock % − linked macro %.
+      Live quotes from Yahoo Finance (delayed) via free CORS proxies. No API key required. Refreshes every 60 s. RS = stock % − linked index %.
     </div>
   </main>
 
   <footer>
-    Core Futures Dashboard · Built from the macros on your screen · Not financial advice
+    Core Futures Dashboard · Built from the indices on your screen · Not financial advice
   </footer>
 
   <script>
