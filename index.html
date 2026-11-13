@@ -31,7 +31,7 @@
 <div class="results-count" id="resultsCount">—</div>
 <table><thead><tr><th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>1D %</th><th>RS</th><th>Regime</th><th>Index</th></tr></thead><tbody id="resultsBody"></tbody></table>
 <div class="shortlist-panel"><div class="shortlist-header"><h2>Tradable shortlist</h2><span>Top 20 · daily email 09:00 HKT · research aid only</span></div><div class="shortlist-grid" id="shortlistGrid"><div class="shortlist-empty">Apply a filter to populate the shortlist</div></div></div>
-<div class="notes"><strong>Universe:</strong> top ~33% by market cap / index weight per index group. HSI ~32 · STI 10 · US large-caps. Delayed Yahoo · not advice.</div>
+<div class="notes"><strong>Universe:</strong> HSI top 30 by weight · STI top 10 · US large-caps. Delayed Yahoo · not advice.</div>
 </main>
 <footer>Core Futures · Not financial advice</footer>
 <script>
@@ -39,85 +39,11 @@ const YAHOO_MAP={NQ:'NQ=F',ES:'ES=F',YM:'YM=F',RTY:'RTY=F',CL:'CL=F',GC:'GC=F','
 let macroData=Object.fromEntries(Object.keys(YAHOO_MAP).map(k=>[k,{price:0,change:0,changeAbs:0}]));
 const S=(t,n,s,r,m)=>({ticker:t,name:n,sector:s,price:0,change:0,rs:0,volume:0,change5d:0,liq:0,trend:'flat',regime:r,macro:m});
 const stockUniverse=[
-/* US large-cap (top tier by mkt cap / liquidity per linked index) */
-S('AAPL','Apple','Technology','risk-on','NQ'),
-S('MSFT','Microsoft','Technology','risk-on','NQ'),
-S('NVDA','NVIDIA','Technology','risk-on','NQ'),
-S('GOOGL','Alphabet','Communication Services','risk-on','NQ'),
-S('META','Meta','Communication Services','risk-on','NQ'),
-S('NFLX','Netflix','Communication Services','risk-on','NQ'),
-S('AMZN','Amazon','Consumer Discretionary','risk-on','ES'),
-S('UNH','UnitedHealth','Healthcare','neutral','ES'),
-S('JNJ','J&J','Healthcare','neutral','ES'),
-S('WMT','Walmart','Consumer Staples','risk-off','ES'),
-S('COST','Costco','Consumer Staples','risk-off','ES'),
-S('DIS','Disney','Communication Services','risk-on','ES'),
-S('PLD','Prologis','Real Estate','risk-off','ES'),
-S('AMT','American Tower','Real Estate','risk-off','ES'),
-S('SPG','Simon Property','Real Estate','risk-on','ES'),
-S('JPM','JPMorgan','Financials','risk-on','YM'),
-S('BAC','Bank of America','Financials','risk-on','YM'),
-S('CAT','Caterpillar','Industrials','risk-on','YM'),
-S('XOM','Exxon','Energy','energy','CL'),
-S('CVX','Chevron','Energy','energy','CL'),
-S('SLB','Schlumberger','Energy','energy','CL'),
-S('NEM','Newmont','Materials','risk-off','GC'),
-S('GOLD','Barrick','Materials','risk-off','GC'),
-S('FCX','Freeport','Materials','risk-on','ES'),
-S('PG','P&G','Consumer Staples','risk-off','ZN'),
-S('KO','Coca-Cola','Consumer Staples','risk-off','ZN'),
-S('NEE','NextEra','Utilities','risk-off','ZN'),
-S('DUK','Duke Energy','Utilities','risk-off','ZN'),
-S('SO','Southern Co','Utilities','risk-off','ZN'),
-S('IWM','iShares Russell 2000','ETF','risk-on','RTY'),
-S('TLT','iShares 20+Y','ETF','risk-off','ZB'),
-S('IEF','iShares 7-10Y','ETF','risk-off','ZN'),
-S('UUP','USD Index ETF','ETF','fx-driven','6E'),
-S('FXY','Yen ETF','ETF','fx-driven','6J'),
-/* HSI top ~33% by weight (~32 of ~95) */
-S('0700.HK','Tencent','Communication Services','risk-on','HSI'),
-S('9988.HK','Alibaba','Consumer Discretionary','risk-on','HSI'),
-S('0005.HK','HSBC','Financials','risk-on','HSI'),
-S('0939.HK','CCB','Financials','risk-on','HSI'),
-S('1299.HK','AIA','Financials','risk-on','HSI'),
-S('1398.HK','ICBC','Financials','risk-on','HSI'),
-S('0941.HK','China Mobile','Communication Services','risk-on','HSI'),
-S('1810.HK','Xiaomi','Technology','risk-on','HSI'),
-S('0388.HK','HKEX','Financials','risk-on','HSI'),
-S('3988.HK','Bank of China','Financials','risk-on','HSI'),
-S('3690.HK','Meituan','Consumer Discretionary','risk-on','HSI'),
-S('0883.HK','CNOOC','Energy','energy','HSI'),
-S('2318.HK','Ping An','Financials','risk-on','HSI'),
-S('9999.HK','NetEase','Communication Services','risk-on','HSI'),
-S('6160.HK','BeOne Medicines','Healthcare','risk-on','HSI'),
-S('1211.HK','BYD','Consumer Discretionary','risk-on','HSI'),
-S('0857.HK','PetroChina','Energy','energy','HSI'),
-S('3968.HK','CM Bank','Financials','risk-on','HSI'),
-S('0669.HK','Techtronic','Consumer Discretionary','risk-on','HSI'),
-S('0981.HK','SMIC','Technology','risk-on','HSI'),
-S('2388.HK','BOC Hong Kong','Financials','risk-on','HSI'),
-S('0001.HK','CK Hutchison','Industrials','risk-on','HSI'),
-S('2628.HK','China Life','Financials','risk-on','HSI'),
-S('2269.HK','WuXi Biologics','Healthcare','risk-on','HSI'),
-S('2899.HK','Zijin Mining','Materials','risk-on','HSI'),
-S('0016.HK','Sun Hung Kai Prop','Real Estate','risk-off','HSI'),
-S('9618.HK','JD.com','Consumer Discretionary','risk-on','HSI'),
-S('0992.HK','Lenovo','Technology','risk-on','HSI'),
-S('1088.HK','China Shenhua','Energy','energy','HSI'),
-S('1801.HK','Innovent Bio','Healthcare','risk-on','HSI'),
-S('0002.HK','CLP Holdings','Utilities','risk-off','HSI'),
-S('9888.HK','Baidu','Communication Services','risk-on','HSI'),
-/* STI top ~33% by mkt cap (10 of 30) */
-S('D05.SI','DBS','Financials','risk-on','STI'),
-S('O39.SI','OCBC','Financials','risk-on','STI'),
-S('U11.SI','UOB','Financials','risk-on','STI'),
-S('Z74.SI','Singtel','Communication Services','risk-on','STI'),
-S('J36.SI','Jardine Matheson','Industrials','risk-on','STI'),
-S('C38U.SI','CICT','Real Estate','risk-on','STI'),
-S('S68.SI','SGX','Financials','risk-on','STI'),
-S('BN4.SI','Keppel','Industrials','risk-on','STI'),
-S('F34.SI','Wilmar','Consumer Staples','risk-on','STI'),
-S('A17U.SI','Ascendas REIT','Real Estate','risk-on','STI')
+S('AAPL','Apple','Technology','risk-on','NQ'),S('MSFT','Microsoft','Technology','risk-on','NQ'),S('NVDA','NVIDIA','Technology','risk-on','NQ'),S('GOOGL','Alphabet','Communication Services','risk-on','NQ'),S('META','Meta','Communication Services','risk-on','NQ'),S('NFLX','Netflix','Communication Services','risk-on','NQ'),S('AMZN','Amazon','Consumer Discretionary','risk-on','ES'),S('UNH','UnitedHealth','Healthcare','neutral','ES'),S('JNJ','J&J','Healthcare','neutral','ES'),S('WMT','Walmart','Consumer Staples','risk-off','ES'),S('COST','Costco','Consumer Staples','risk-off','ES'),S('DIS','Disney','Communication Services','risk-on','ES'),S('PLD','Prologis','Real Estate','risk-off','ES'),S('AMT','American Tower','Real Estate','risk-off','ES'),S('SPG','Simon Property','Real Estate','risk-on','ES'),S('JPM','JPMorgan','Financials','risk-on','YM'),S('BAC','Bank of America','Financials','risk-on','YM'),S('CAT','Caterpillar','Industrials','risk-on','YM'),S('XOM','Exxon','Energy','energy','CL'),S('CVX','Chevron','Energy','energy','CL'),S('SLB','Schlumberger','Energy','energy','CL'),S('NEM','Newmont','Materials','risk-off','GC'),S('GOLD','Barrick','Materials','risk-off','GC'),S('FCX','Freeport','Materials','risk-on','ES'),S('PG','P&G','Consumer Staples','risk-off','ZN'),S('KO','Coca-Cola','Consumer Staples','risk-off','ZN'),S('NEE','NextEra','Utilities','risk-off','ZN'),S('DUK','Duke Energy','Utilities','risk-off','ZN'),S('SO','Southern Co','Utilities','risk-off','ZN'),S('IWM','iShares Russell 2000','ETF','risk-on','RTY'),S('TLT','iShares 20+Y','ETF','risk-off','ZB'),S('IEF','iShares 7-10Y','ETF','risk-off','ZN'),S('UUP','USD Index ETF','ETF','fx-driven','6E'),S('FXY','Yen ETF','ETF','fx-driven','6J'),
+/* HSI top 30 by weight */
+S('0700.HK','Tencent','Communication Services','risk-on','HSI'),S('9988.HK','Alibaba','Consumer Discretionary','risk-on','HSI'),S('0005.HK','HSBC','Financials','risk-on','HSI'),S('0939.HK','CCB','Financials','risk-on','HSI'),S('1299.HK','AIA','Financials','risk-on','HSI'),S('1398.HK','ICBC','Financials','risk-on','HSI'),S('0941.HK','China Mobile','Communication Services','risk-on','HSI'),S('1810.HK','Xiaomi','Technology','risk-on','HSI'),S('0388.HK','HKEX','Financials','risk-on','HSI'),S('3988.HK','Bank of China','Financials','risk-on','HSI'),S('3690.HK','Meituan','Consumer Discretionary','risk-on','HSI'),S('0883.HK','CNOOC','Energy','energy','HSI'),S('2318.HK','Ping An','Financials','risk-on','HSI'),S('9999.HK','NetEase','Communication Services','risk-on','HSI'),S('6160.HK','BeOne Medicines','Healthcare','risk-on','HSI'),S('1211.HK','BYD','Consumer Discretionary','risk-on','HSI'),S('0857.HK','PetroChina','Energy','energy','HSI'),S('3968.HK','CM Bank','Financials','risk-on','HSI'),S('0669.HK','Techtronic','Consumer Discretionary','risk-on','HSI'),S('0981.HK','SMIC','Technology','risk-on','HSI'),S('2388.HK','BOC Hong Kong','Financials','risk-on','HSI'),S('0001.HK','CK Hutchison','Industrials','risk-on','HSI'),S('2628.HK','China Life','Financials','risk-on','HSI'),S('2269.HK','WuXi Biologics','Healthcare','risk-on','HSI'),S('2899.HK','Zijin Mining','Materials','risk-on','HSI'),S('0016.HK','Sun Hung Kai Prop','Real Estate','risk-off','HSI'),S('9618.HK','JD.com','Consumer Discretionary','risk-on','HSI'),S('0992.HK','Lenovo','Technology','risk-on','HSI'),S('1088.HK','China Shenhua','Energy','energy','HSI'),S('9888.HK','Baidu','Communication Services','risk-on','HSI'),
+/* STI top 10 */
+S('D05.SI','DBS','Financials','risk-on','STI'),S('O39.SI','OCBC','Financials','risk-on','STI'),S('U11.SI','UOB','Financials','risk-on','STI'),S('Z74.SI','Singtel','Communication Services','risk-on','STI'),S('J36.SI','Jardine Matheson','Industrials','risk-on','STI'),S('C38U.SI','CICT','Real Estate','risk-on','STI'),S('S68.SI','SGX','Financials','risk-on','STI'),S('BN4.SI','Keppel','Industrials','risk-on','STI'),S('F34.SI','Wilmar','Consumer Staples','risk-on','STI'),S('A17U.SI','Ascendas REIT','Real Estate','risk-on','STI')
 ];
 let activeMacro=null;
 function yahooUrl(s,alt,range='1d',interval='1h'){const t=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(s)}?range=${range}&interval=${interval}&includePrePost=false`;return alt?`https://api.allorigins.win/raw?url=${encodeURIComponent(t)}`:`https://proxy.cors.dev/${t}`}
