@@ -72,7 +72,7 @@
     }
     .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .macros-grid {
-      display: grid; grid-template-columns: repeat(6, 1fr);
+      display: grid; grid-template-columns: repeat(5, 1fr);
       gap: 1rem; margin-bottom: 2.5rem;
     }
     @media (max-width: 1200px) { .macros-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -226,15 +226,6 @@
           <span class="change up" data-change>+0.00%</span>
         </div>
       </div>
-      <div class="macro-card" data-symbol="NKD" data-name="Nikkei 225">
-        <div class="category">Equity</div>
-        <div class="name">Nikkei 225</div>
-        <div class="ticker">NKD</div>
-        <div class="price-row">
-          <span class="price" data-price>--</span>
-          <span class="change up" data-change>+0.00%</span>
-        </div>
-      </div>
       <div class="macro-card" data-symbol="CL" data-name="Crude oil">
         <div class="category">Energy</div>
         <div class="name">Crude oil</div>
@@ -291,6 +282,37 @@
       </div>
     </div>
 
+    <div class="section-title">Asia Indices</div>
+    <div class="macros-grid" id="asiaGrid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="macro-card" data-symbol="NKD" data-name="Nikkei 225">
+        <div class="category">Japan</div>
+        <div class="name">Nikkei 225</div>
+        <div class="ticker">NKD</div>
+        <div class="price-row">
+          <span class="price" data-price>--</span>
+          <span class="change up" data-change>+0.00%</span>
+        </div>
+      </div>
+      <div class="macro-card" data-symbol="HSI" data-name="Hang Seng">
+        <div class="category">Hong Kong</div>
+        <div class="name">Hang Seng</div>
+        <div class="ticker">HSI</div>
+        <div class="price-row">
+          <span class="price" data-price>--</span>
+          <span class="change up" data-change>+0.00%</span>
+        </div>
+      </div>
+      <div class="macro-card" data-symbol="STI" data-name="Straits Times">
+        <div class="category">Singapore</div>
+        <div class="name">Straits Times</div>
+        <div class="ticker">STI</div>
+        <div class="price-row">
+          <span class="price" data-price>--</span>
+          <span class="change up" data-change>+0.00%</span>
+        </div>
+      </div>
+    </div>
+
     <div class="section-title">Stock Filter</div>
     <div class="filter-panel">
       <div class="filter-row">
@@ -312,13 +334,15 @@
             <option value="ES">S&P 500 (ES)</option>
             <option value="YM">Dow (YM)</option>
             <option value="RTY">Russell (RTY)</option>
-            <option value="NKD">Nikkei 225 (NKD)</option>
             <option value="CL">Crude oil (CL)</option>
             <option value="GC">Gold (GC)</option>
             <option value="6E">Euro (6E)</option>
             <option value="6J">Yen (6J)</option>
             <option value="ZN">10y bond (ZN)</option>
             <option value="ZB">30y bond (ZB)</option>
+            <option value="NKD">Nikkei 225 (NKD)</option>
+            <option value="HSI">Hang Seng (HSI)</option>
+            <option value="STI">Straits Times (STI)</option>
           </select>
         </div>
         <div class="filter-group">
@@ -375,7 +399,7 @@
 
     <div class="notes">
       <strong>How to use this dashboard</strong><br>
-      The eleven futures indices (NQ, ES, YM, RTY, NKD, CL, GC, 6E, 6J, ZN, ZB) form the core “language” of the market.
+      Core futures (NQ, ES, YM, RTY, CL, GC, 6E, 6J, ZN, ZB) plus Asia indices (NKD, HSI, STI) form the core “language” of the market.
       Click any index card to highlight it as the reference for relative-strength ranking.
       Use the filter panel to surface stocks that historically move with a chosen regime or linked index.
       Click any ticker to open its Finviz chart.
@@ -389,14 +413,15 @@
 
   <script>
     const YAHOO_MAP = {
-      NQ: 'NQ=F', ES: 'ES=F', YM: 'YM=F', RTY: 'RTY=F', NKD: 'NKD=F',
-      CL: 'CL=F', GC: 'GC=F', '6E': '6E=F', '6J': '6J=F', ZN: 'ZN=F', ZB: 'ZB=F'
+      NQ: 'NQ=F', ES: 'ES=F', YM: 'YM=F', RTY: 'RTY=F',
+      CL: 'CL=F', GC: 'GC=F', '6E': '6E=F', '6J': '6J=F', ZN: 'ZN=F', ZB: 'ZB=F',
+      NKD: 'NKD=F', HSI: '^HSI', STI: '^STI'
     };
     let macroData = {
       NQ: {price:0,change:0}, ES: {price:0,change:0}, YM: {price:0,change:0},
-      RTY: {price:0,change:0}, NKD: {price:0,change:0}, CL: {price:0,change:0},
-      GC: {price:0,change:0}, '6E': {price:0,change:0}, '6J': {price:0,change:0},
-      ZN: {price:0,change:0}, ZB: {price:0,change:0}
+      RTY: {price:0,change:0}, CL: {price:0,change:0}, GC: {price:0,change:0},
+      '6E': {price:0,change:0}, '6J': {price:0,change:0}, ZN: {price:0,change:0}, ZB: {price:0,change:0},
+      NKD: {price:0,change:0}, HSI: {price:0,change:0}, STI: {price:0,change:0}
     };
     const stockUniverse = [
       { ticker: "AAPL",  name: "Apple",              sector: "Technology",   price: 0, change: 0, rs: 1.4, regime: "risk-on",  macro: "NQ" },
@@ -500,7 +525,7 @@
       if (p > 1000) return p.toLocaleString('en-US', { maximumFractionDigits: 2 });
       return p.toFixed(2);
     }
-    document.getElementById('macrosGrid').addEventListener('click', e => {
+    document.querySelector('main').addEventListener('click', e => {
       const card = e.target.closest('.macro-card');
       if (!card) return;
       document.querySelectorAll('.macro-card').forEach(c => c.classList.remove('active'));
